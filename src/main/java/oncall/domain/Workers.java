@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Set;
 import oncall.error.ErrorCode;
 
@@ -12,7 +11,7 @@ public class Workers {
 
     public static final int MAX_SIZE = 35;
     public static final int MIN_SIZE = 5;
-    Queue<Worker> workers = new LinkedList<>();
+    List<Worker> workers = new LinkedList<>();
 
     public Workers(String input) {
         String[] split = split(input);
@@ -21,10 +20,28 @@ public class Workers {
         putWorker(split);
     }
 
+    public Worker getCurrentWorker() {
+        Worker worker = workers.get(0);
+        workers.remove(0);
+        workers.add(worker);
+        return worker;
+    }
+
+    public void changeWorkerSequence() {
+        Worker secondWorker = workers.get(1);
+
+        workers.remove(1);
+        workers.add(0, secondWorker);
+    }
+
+    public Worker peekCurrentWorker() {
+        return workers.get(0);
+    }
+
     private void putWorker(String[] split) {
         Arrays.stream(split)
                 .map(Worker::new)
-                .forEach(worker -> workers.offer(worker));
+                .forEach(worker -> workers.add(worker));
     }
 
     private void validateDuplicate(String[] split) {

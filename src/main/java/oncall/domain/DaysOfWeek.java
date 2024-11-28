@@ -23,14 +23,33 @@ public enum DaysOfWeek {
         this.nextDay = nextDay;
     }
 
-    private String getName() {
+    public boolean isHoliday(DaysOfWeek input) {
+        return input.getNumber() == 1 || input.getNumber() == 7;
+    }
+
+    public String getName() {
         return name;
+    }
+
+    private int getNextDay() {
+        return nextDay;
+    }
+
+    private int getNumber() {
+        return number;
     }
 
     public static DaysOfWeek getDayByName(String inputName) {
         validate(inputName);
         return Arrays.stream(DaysOfWeek.values())
                 .filter(day -> day.getName().equals(inputName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ErrorCode.NOT_FOUND_DAY.getMessage()));
+    }
+
+    public static DaysOfWeek getNextDay(DaysOfWeek daysOfWeek) {
+        return Arrays.stream(DaysOfWeek.values())
+                .filter(day -> day.getNumber() == daysOfWeek.getNextDay())
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCode.NOT_FOUND_DAY.getMessage()));
     }

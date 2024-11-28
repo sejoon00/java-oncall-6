@@ -2,6 +2,7 @@ package oncall.io;
 
 import camp.nextstep.edu.missionutils.Console;
 import java.util.function.Supplier;
+import oncall.domain.MonthSchedule;
 import oncall.domain.TargetMonth;
 import oncall.domain.Worker;
 import oncall.domain.Workers;
@@ -25,7 +26,7 @@ public class InputView implements AutoCloseable {
                 () -> new TargetMonth(readLine()));
     }
 
-    public void inputWorkers() {
+    public MonthSchedule inputWorkers(TargetMonth targetMonth) {
         while (true) {
             try {
                 System.out.print("평일 비상 근무 순번대로 사원 닉네임을 입력하세요> ");
@@ -34,6 +35,7 @@ public class InputView implements AutoCloseable {
                 Workers holidaysWorkers = new Workers(readLine());
 
                 System.out.println();
+                return new MonthSchedule(targetMonth, weekdayWorkers, holidaysWorkers);
             } catch (IllegalArgumentException ex) {
                 printReInput(ex);
             }

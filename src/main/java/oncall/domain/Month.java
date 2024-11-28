@@ -2,32 +2,39 @@ package oncall.domain;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import oncall.error.ErrorCode;
 
 public enum Month {
-    JANUARY("January", 1, List.of(new Holiday(1, 1))),
-    FEBRUARY("February", 2, null),
-    MARCH("March", 3, List.of(new Holiday(3, 1))),
-    APRIL("April", 4, null),
-    MAY("May", 5, List.of(new Holiday(5, 5))),
-    JUNE("June", 6, List.of(new Holiday(6, 6))),
-    JULY("July", 7, null),
-    AUGUST("August", 8, List.of(new Holiday(8, 15))),
-    SEPTEMBER("September", 9, null),
-    OCTOBER("October", 10, List.of(new Holiday(10, 3), new Holiday(10, 9))),
-    NOVEMBER("November", 11, null),
-    DECEMBER("December", 12, List.of(new Holiday(12, 25)));
+    JANUARY("January", 1, 31, List.of(new Holiday("1월 1일"))),
+    FEBRUARY("February", 2, 28, null),
+    MARCH("March", 3, 31, List.of(new Holiday("3월 1일"))),
+    APRIL("April", 4, 30, null),
+    MAY("May", 5, 31, List.of(new Holiday("5월 5일"))),
+    JUNE("June", 6, 30, List.of(new Holiday("6월 6일"))),
+    JULY("July", 7, 31, null),
+    AUGUST("August", 8, 31, List.of(new Holiday("8월 15일"))),
+    SEPTEMBER("September", 9, 30, null),
+    OCTOBER("October", 10, 31, List.of(new Holiday("10월 3일"), new Holiday("10월 9일"))),
+    NOVEMBER("November", 11, 30, null),
+    DECEMBER("December", 12, 31, List.of(new Holiday("12월 25일")));
 
     private static final int INPUT_LENGTH = 2;
 
     private final String name;
     private final int number;
+    private final int lastDate;
     private final List<Holiday> holidays;
 
-    Month(String name, int number, List<Holiday> holidays) {
+    Month(String name, int number, int lastDate, List<Holiday> holidays) {
         this.name = name;
         this.number = number;
+        this.lastDate = lastDate;
         this.holidays = holidays;
+    }
+
+    public int getLastDate() {
+        return lastDate;
     }
 
     public static Month getMonthByInput(String input) {
@@ -62,21 +69,37 @@ public enum Month {
         }
     }
 
-    public String getName() {
-        return name;
+    public List<Holiday> getHolidays() {
+        return holidays;
     }
 
-    private int getNumber() {
+    public static boolean isHoliday(String date) {
+        List<List<Holiday>> list = Arrays.stream(values())
+                .map(Month::getHolidays)
+                .filter(Objects::nonNull)
+                .toList();
+        for (List<Holiday> holidays : list) {
+            boolean isHoliday = holidays.stream()
+                    .anyMatch(holiday -> holiday.isEquals(date));
+            if(isHoliday)
+                return true;
+        }
+        return false;
+    }
+
+    public int getNumber() {
         return number;
     }
 
     static class Holiday{
-        private final int month;
-        private final int date;
+        private final String date;
 
-        public Holiday(int month, int date) {
-            this.month = month;
+        public Holiday(String date) {
             this.date = date;
+        }
+
+        public boolean isEquals(String input) {
+            return date.equals(input);
         }
     }
 }

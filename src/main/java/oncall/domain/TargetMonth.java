@@ -9,12 +9,14 @@ public class TargetMonth {
 
     private Month month;
     private DaysOfWeek day;
+    private int tempDate;
 
 
     public TargetMonth(String input) {
         String[] split = split(input);
         this.month = Month.getMonthByInput(split[0]);
         this.day = DaysOfWeek.getDayByName(split[1]);
+        this.tempDate = 1;
     }
 
     private String[] split(String input) {
@@ -26,7 +28,23 @@ public class TargetMonth {
         return split;
     }
 
-    public void getNextDay() {
+    public DaysOfWeek getNextDay() {
+        return day;
+    }
 
+    public String getNextDate() {
+        return month.getNumber() + "월 " + tempDate + "일";
+    }
+
+    public String getNextDateAndDay() {
+        String result = month.getNumber() + "월 " + tempDate + "일 " + day.getName();
+        this.day = DaysOfWeek.getNextDay(this.day);
+        tempDate++;
+
+        return result;
+    }
+
+    public boolean isFinishDateInMonth() {
+        return tempDate > month.getLastDate();
     }
 }
