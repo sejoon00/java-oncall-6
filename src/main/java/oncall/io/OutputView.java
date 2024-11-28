@@ -11,6 +11,4 @@ public class OutputView {
 
         System.out.println(sb);
     }
-
-
 }

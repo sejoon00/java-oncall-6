@@ -11,7 +11,6 @@ public class TargetMonth {
     private DaysOfWeek day;
     private int tempDate;
 
-
     public TargetMonth(String input) {
         String[] split = split(input);
         this.month = Month.getMonthByInput(split[0]);

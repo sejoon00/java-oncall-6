@@ -6,35 +6,29 @@ import java.util.Objects;
 import oncall.error.ErrorCode;
 
 public enum Month {
-    JANUARY("January", 1, 31, List.of(new Holiday("1월 1일"))),
-    FEBRUARY("February", 2, 28, null),
-    MARCH("March", 3, 31, List.of(new Holiday("3월 1일"))),
-    APRIL("April", 4, 30, null),
-    MAY("May", 5, 31, List.of(new Holiday("5월 5일"))),
-    JUNE("June", 6, 30, List.of(new Holiday("6월 6일"))),
-    JULY("July", 7, 31, null),
-    AUGUST("August", 8, 31, List.of(new Holiday("8월 15일"))),
-    SEPTEMBER("September", 9, 30, null),
-    OCTOBER("October", 10, 31, List.of(new Holiday("10월 3일"), new Holiday("10월 9일"))),
-    NOVEMBER("November", 11, 30, null),
-    DECEMBER("December", 12, 31, List.of(new Holiday("12월 25일")));
+    JANUARY(1, 31, List.of(new Holiday("1월 1일"))),
+    FEBRUARY(2, 28, null),
+    MARCH(3, 31, List.of(new Holiday("3월 1일"))),
+    APRIL(4, 30, null),
+    MAY(5, 31, List.of(new Holiday("5월 5일"))),
+    JUNE(6, 30, List.of(new Holiday("6월 6일"))),
+    JULY(7, 31, null),
+    AUGUST(8, 31, List.of(new Holiday("8월 15일"))),
+    SEPTEMBER(9, 30, null),
+    OCTOBER(10, 31, List.of(new Holiday("10월 3일"), new Holiday("10월 9일"))),
+    NOVEMBER(11, 30, null),
+    DECEMBER(12, 31, List.of(new Holiday("12월 25일")));
 
     private static final int INPUT_LENGTH = 2;
 
-    private final String name;
     private final int number;
     private final int lastDate;
     private final List<Holiday> holidays;
 
-    Month(String name, int number, int lastDate, List<Holiday> holidays) {
-        this.name = name;
+    Month(int number, int lastDate, List<Holiday> holidays) {
         this.number = number;
         this.lastDate = lastDate;
         this.holidays = holidays;
-    }
-
-    public int getLastDate() {
-        return lastDate;
     }
 
     public static Month getMonthByInput(String input) {
@@ -51,11 +45,9 @@ public enum Month {
             throw new IllegalArgumentException(ErrorCode.BLANK_INPUT_MESSAGE.getMessage());
         }
 
-        if(inputName.length() > INPUT_LENGTH){
+        if(inputName.length() > INPUT_LENGTH) {
             throw new IllegalArgumentException(ErrorCode.OVER_MONTH_NAME_LENGTH.getMessage());
         }
-
-
     }
 
     private static int parseInt(String value){
@@ -69,22 +61,20 @@ public enum Month {
         }
     }
 
-    public List<Holiday> getHolidays() {
-        return holidays;
-    }
-
     public static boolean isHoliday(String date) {
-        List<List<Holiday>> list = Arrays.stream(values())
+        return Arrays.stream(values())
                 .map(Month::getHolidays)
                 .filter(Objects::nonNull)
-                .toList();
-        for (List<Holiday> holidays : list) {
-            boolean isHoliday = holidays.stream()
-                    .anyMatch(holiday -> holiday.isEquals(date));
-            if(isHoliday)
-                return true;
-        }
-        return false;
+                .flatMap(List::stream)
+                .anyMatch(holiday -> holiday.isEquals(date));
+    }
+
+    public int getLastDate() {
+        return lastDate;
+    }
+
+    public List<Holiday> getHolidays() {
+        return holidays;
     }
 
     public int getNumber() {
