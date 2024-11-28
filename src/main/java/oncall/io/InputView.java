@@ -25,9 +25,19 @@ public class InputView implements AutoCloseable {
                 () -> new TargetMonth(readLine()));
     }
 
-    public Workers inputWeekdayWorkers() {
-        return retryInput("평일 비상 근무 순번대로 사원 닉네임을 입력하세요> ",
-                () -> new Workers(readLine()));
+    public void inputWorkers() {
+        while (true) {
+            try {
+                System.out.print("평일 비상 근무 순번대로 사원 닉네임을 입력하세요> ");
+                Workers weekdayWorkers = new Workers(readLine());
+                System.out.print("휴일 비상 근무 순번대로 사원 닉네임을 입력하세요> ");
+                Workers holidaysWorkers = new Workers(readLine());
+
+                System.out.println();
+            } catch (IllegalArgumentException ex) {
+                printReInput(ex);
+            }
+        }
     }
 
     private String readLine() {
@@ -59,9 +69,6 @@ public class InputView implements AutoCloseable {
             }
         }
     }
-
-
-
 
     @Override
     public void close() {

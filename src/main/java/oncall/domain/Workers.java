@@ -51,7 +51,6 @@ public class Workers {
             throw new IllegalArgumentException(ErrorCode.BLANK_NICKNAME.getMessage());
         }
 
-
         return split;
     }
 }

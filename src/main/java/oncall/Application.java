@@ -12,7 +12,8 @@ public class Application {
 
 
         TargetMonth targetMonth = inputView.inputTargetMonth();
-        Workers weekdayWorkers = inputView.inputWeekdayWorkers();
+
+        inputView.inputWorkers();
 
     }
 }
