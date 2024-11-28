@@ -1,6 +1,7 @@
 package oncall;
 
 import oncall.domain.TargetMonth;
+import oncall.domain.Workers;
 import oncall.io.InputView;
 
 public class Application {
@@ -9,9 +10,9 @@ public class Application {
 
         InputView inputView = new InputView();
 
-        while (true) {
-            TargetMonth targetMonth = inputView.inputTargetMonth();
 
-        }
+        TargetMonth targetMonth = inputView.inputTargetMonth();
+        Workers weekdayWorkers = inputView.inputWeekdayWorkers();
+
     }
 }

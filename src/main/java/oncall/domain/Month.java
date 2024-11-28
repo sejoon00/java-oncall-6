@@ -18,7 +18,7 @@ public enum Month {
     NOVEMBER("November", 11, null),
     DECEMBER("December", 12, List.of(new Holiday(12, 25)));
 
-    private static final int INPUT_LENGTH = 1;
+    private static final int INPUT_LENGTH = 2;
 
     private final String name;
     private final int number;
@@ -44,7 +44,7 @@ public enum Month {
             throw new IllegalArgumentException(ErrorCode.BLANK_INPUT_MESSAGE.getMessage());
         }
 
-        if(inputName.length() != INPUT_LENGTH){
+        if(inputName.length() > INPUT_LENGTH){
             throw new IllegalArgumentException(ErrorCode.OVER_MONTH_NAME_LENGTH.getMessage());
         }
 
