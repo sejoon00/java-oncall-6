@@ -1,6 +1,5 @@
 package oncall.io;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class OutputView {

@@ -33,8 +33,8 @@ public class MonthSchedule {
                 schedule.add(nextDateAndDay + "(휴일) " + holidayWorker.getName());
                 continue;
             }
-            Worker weekDayWorker = weekDayWorkers.getCurrentWorker();
 
+            Worker weekDayWorker = weekDayWorkers.getCurrentWorker();
             schedule.add(nextDateAndDay + " " + weekDayWorker.getName());
         }
 

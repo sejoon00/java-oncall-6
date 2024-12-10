@@ -16,11 +16,10 @@ public enum Month {
     AUGUST(8, 31, List.of(new Holiday("8월 15일"))),
     SEPTEMBER(9, 30, null),
     OCTOBER(10, 31, List.of(new Holiday("10월 3일"), new Holiday("10월 9일"))),
-    NOVEMBER(11, 30, null),
+    NOVEMBER(11, 30, List.of()),
     DECEMBER(12, 31, List.of(new Holiday("12월 25일")));
 
     private static final int INPUT_LENGTH = 2;
-
     private final int number;
     private final int lastDate;
     private final List<Holiday> holidays;

@@ -24,6 +24,7 @@ public class TargetMonth {
         if(split.length != INPUT_CASE_NUMBER){
             throw new IllegalArgumentException(ErrorCode.INPUT_ERROR.getMessage());
         }
+
         return split;
     }
 
